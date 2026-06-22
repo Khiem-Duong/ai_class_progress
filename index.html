@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI CLASS PROGRESS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>AI CLASS PROGRESS</h1>
+    <p class="subtitle">TRACK. LOG. DOMINATE.</p>
+  </header>
+
+  <main>
+    <section class="add-section">
+      <h2>// ADD ENTRY</h2>
+      <div class="form-row">
+        <div class="field">
+          <label for="entry-date">DATE</label>
+          <input type="date" id="entry-date" />
+        </div>
+        <div class="field">
+          <label for="entry-hours">HOURS</label>
+          <input type="text" id="entry-hours" placeholder="e.g. 2.5" />
+        </div>
+        <div class="field field--wide">
+          <label for="entry-item">ITEM / TOPIC</label>
+          <input type="text" id="entry-item" placeholder="e.g. Prompt Engineering" />
+        </div>
+        <button id="add-btn" onclick="addEntry()">+ ADD</button>
+      </div>
+      <p id="error-msg" class="error hidden">FILL IN ALL FIELDS.</p>
+    </section>
+
+    <section class="list-section">
+      <div class="list-header">
+        <h2>// PROGRESS LOG</h2>
+        <div class="stats">
+          <span>ENTRIES: <strong id="count">0</strong></span>
+          <span>TOTAL HRS: <strong id="total-hours">0</strong></span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table id="entry-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>DATE</th>
+              <th>HOURS</th>
+              <th>ITEM / TOPIC</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody id="entry-body">
+          </tbody>
+        </table>
+        <p id="empty-msg" class="empty-msg">NO ENTRIES YET. ADD ONE ABOVE.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
