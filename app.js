@@ -34,10 +34,27 @@ async function updateHours(id, value) {
   renderStats(sessions)
 }
 
+function parseHoursToMinutes(str) {
+  if (!str) return 0
+  if (str.includes(':')) {
+    const [h, m] = str.split(':').map(Number)
+    return (h || 0) * 60 + (m || 0)
+  }
+  return Math.round((parseFloat(str) || 0) * 60)
+}
+
+function formatMinutesAsHours(mins) {
+  const sign = mins < 0 ? '-' : ''
+  mins = Math.abs(mins)
+  const h = Math.floor(mins / 60)
+  const m = mins % 60
+  return `${sign}${h}:${String(m).padStart(2, '0')}`
+}
+
 function renderStats(sessions) {
   document.getElementById('s-count').textContent = sessions.length
-  const total = sessions.reduce((sum, s) => sum + (parseFloat(s.hours) || 0), 0)
-  document.getElementById('s-total').textContent = Number.isInteger(total) ? total : total.toFixed(1)
+  const totalMinutes = sessions.reduce((sum, s) => sum + parseHoursToMinutes(s.hours), 0)
+  document.getElementById('s-total').textContent = formatMinutesAsHours(totalMinutes)
 }
 
 function formatDate(str) {
@@ -47,7 +64,7 @@ function formatDate(str) {
 }
 
 async function renderSessions() {
-  const sessions = await api('/api/sessions')
+  const sessions = (await api('/api/sessions')).sort((a, b) => a.date.localeCompare(b.date))
   const tbody = document.getElementById('s-body')
   const table = document.getElementById('s-table')
   const empty = document.getElementById('s-empty')
@@ -114,10 +131,13 @@ async function renderItems() {
   } else {
     list.style.display = ''
     empty.style.display = 'none'
-    items.forEach(item => {
+    const total = items.length
+    items.slice().reverse().forEach((item, i) => {
+      const number = total - i
       const li = document.createElement('li')
       li.innerHTML = `
-        <span>${item.text}</span>
+        <span class="item-number">${String(number).padStart(2, '0')}</span>
+        <span class="item-text">${item.text}</span>
         <button class="del-btn" onclick="deleteItem(${item.id})">✕ DEL</button>
       `
       list.appendChild(li)

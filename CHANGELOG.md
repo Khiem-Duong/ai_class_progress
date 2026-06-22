@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.2.0
+
+- Rename "Session Log" to "Date & Time Log".
+- Sessions are now always sorted chronologically by date on render,
+  regardless of the order they were entered in.
+- HOURS field now uses an `H:MM` format (placeholder `-:--`, e.g. `2:15`)
+  instead of decimal hours; total hours are parsed and summed as minutes
+  and displayed back in `H:MM` (legacy decimal values still parse correctly).
+- Topics & Items list now renders newest-first, with item numbers counting
+  down from the total (e.g. 4, 3, 2, 1) instead of up from 1.
+- Changes are isolated to render/sort/parse logic in `app.js`; the
+  `/api/sessions` and `/api/items` Redis-backed endpoints are untouched.
+
 ## v1.1.0
 
 - Redesign UI from neobrutalist yellow/black theme to a dark-first, monochrome
