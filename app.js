@@ -96,6 +96,18 @@ function render() {
   updateStats(entries);
 }
 
+// DARK MODE
+function toggleTheme() {
+  const isDark = document.body.classList.toggle('dark');
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  document.getElementById('theme-toggle').textContent = isDark ? '◑ LIGHT' : '◐ DARK';
+}
+
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('dark');
+  document.getElementById('theme-toggle').textContent = '◑ LIGHT';
+}
+
 // Set today's date as default
 document.getElementById('entry-date').valueAsDate = new Date();
 
