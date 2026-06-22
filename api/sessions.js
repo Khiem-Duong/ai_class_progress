@@ -1,11 +1,11 @@
-import { Redis } from '@upstash/redis'
+const { Redis } = require('@upstash/redis')
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
   token: process.env.UPSTASH_REDIS_REST_TOKEN,
 })
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   try {
     if (req.method === 'GET') {
       const sessions = await redis.get('sessions') || []
@@ -39,6 +39,6 @@ export default async function handler(req, res) {
     res.status(405).end()
   } catch (err) {
     console.error(err)
-    res.status(500).json({ error: 'Server error' })
+    res.status(500).json({ error: err.message })
   }
 }
