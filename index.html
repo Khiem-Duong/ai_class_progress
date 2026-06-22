@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,63 +7,70 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header>
     <div class="header-top">
       <div>
         <h1>AI CLASS PROGRESS</h1>
         <p class="subtitle">TRACK. LOG. DOMINATE.</p>
       </div>
-      <button id="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">◐ DARK</button>
+      <button id="theme-toggle" onclick="toggleTheme()">◐ DARK</button>
     </div>
   </header>
 
   <main>
-    <section class="add-section">
-      <h2>// ADD ENTRY</h2>
+
+    <!-- SESSION LOG -->
+    <section class="panel">
+      <h2>// SESSION LOG</h2>
+
       <div class="form-row">
         <div class="field">
-          <label for="entry-date">DATE</label>
-          <input type="date" id="entry-date" />
+          <label for="s-date">DATE</label>
+          <input type="date" id="s-date" />
         </div>
         <div class="field">
-          <label for="entry-hours">HOURS</label>
-          <input type="text" id="entry-hours" placeholder="e.g. 2.5" />
+          <label for="s-hours">HOURS</label>
+          <input type="text" id="s-hours" placeholder="e.g. 2.5" />
         </div>
-        <div class="field field--wide">
-          <label for="entry-item">ITEM / TOPIC</label>
-          <input type="text" id="entry-item" placeholder="e.g. Prompt Engineering" />
-        </div>
-        <button id="add-btn" onclick="addEntry()">+ ADD</button>
+        <button onclick="addSession()">+ ADD SESSION</button>
       </div>
-      <p id="error-msg" class="error hidden">FILL IN ALL FIELDS.</p>
-    </section>
+      <p id="s-error" class="error hidden">FILL IN ALL FIELDS.</p>
 
-    <section class="list-section">
-      <div class="list-header">
-        <h2>// PROGRESS LOG</h2>
+      <div class="table-wrap" style="margin-top:24px">
         <div class="stats">
-          <span>ENTRIES: <strong id="count">0</strong></span>
-          <span>TOTAL HRS: <strong id="total-hours">0</strong></span>
+          <span>SESSIONS: <strong id="s-count">0</strong></span>
+          <span>TOTAL HRS: <strong id="s-total">0</strong></span>
         </div>
-      </div>
-
-      <div class="table-wrap">
-        <table id="entry-table">
+        <table id="s-table">
           <thead>
-            <tr>
-              <th>#</th>
-              <th>DATE</th>
-              <th>HOURS</th>
-              <th>ITEM / TOPIC</th>
-              <th>ACTION</th>
-            </tr>
+            <tr><th>#</th><th>DATE</th><th>HOURS</th><th>DEL</th></tr>
           </thead>
-          <tbody id="entry-body">
-          </tbody>
+          <tbody id="s-body"></tbody>
         </table>
-        <p id="empty-msg" class="empty-msg">NO ENTRIES YET. ADD ONE ABOVE.</p>
+        <p id="s-empty" class="empty-msg">NO SESSIONS YET.</p>
       </div>
     </section>
+
+    <!-- ITEMS LIST -->
+    <section class="panel panel--white">
+      <h2>// TOPICS &amp; ITEMS</h2>
+
+      <div class="form-row">
+        <div class="field field--wide">
+          <label for="i-text">ITEM / TOPIC</label>
+          <input type="text" id="i-text" placeholder="e.g. Prompt Engineering" />
+        </div>
+        <button onclick="addItem()">+ ADD ITEM</button>
+      </div>
+      <p id="i-error" class="error hidden">ENTER AN ITEM.</p>
+
+      <div style="margin-top:24px">
+        <ol id="i-list" class="item-list"></ol>
+        <p id="i-empty" class="empty-msg">NO ITEMS YET.</p>
+      </div>
+    </section>
+
   </main>
 
   <script src="app.js"></script>
