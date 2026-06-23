@@ -153,21 +153,21 @@ function setLoading(elId, on) {
   el.style.pointerEvents = on ? 'none' : ''
 }
 
-// ── DARK MODE ──
+// ── THEME TOGGLE (dark ↔ luxe) ──
 function toggleTheme() {
-  const html   = document.documentElement
-  const isDark = html.getAttribute('data-theme') === 'dark'
-  const next   = isDark ? 'light' : 'dark'
+  const html    = document.documentElement
+  const isLuxe  = html.getAttribute('data-theme') === 'luxe'
+  const next    = isLuxe ? 'dark' : 'luxe'
   html.setAttribute('data-theme', next)
   localStorage.setItem('theme', next)
-  document.getElementById('theme-toggle').textContent = next === 'dark' ? '◑ LIGHT' : '◐ DARK'
+  document.getElementById('theme-toggle').textContent = next === 'luxe' ? '◈ DARK' : '◆ LUXE'
 }
 
 ;(function initTheme() {
   const saved = localStorage.getItem('theme')
-  if (saved === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark')
-    document.getElementById('theme-toggle').textContent = '◑ LIGHT'
+  if (saved === 'luxe') {
+    document.documentElement.setAttribute('data-theme', 'luxe')
+    document.getElementById('theme-toggle').textContent = '◈ DARK'
   }
 })()
 
