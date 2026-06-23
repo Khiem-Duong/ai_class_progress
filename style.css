@@ -752,7 +752,22 @@ td.num { font-weight: 500; color: var(--fg-muted); width: 44px; }
   .panel { padding: 24px 20px; }
   .form-row { flex-direction: column; }
   #s-date, #s-hours { width: 100%; }
-  button { width: 100%; text-align: center; }
+  /* Full-width buttons except del-btn inside item list */
+  button:not(.del-btn):not(.theme-btn) { width: 100%; text-align: center; }
   .header-top { flex-direction: column; align-items: flex-start; gap: 16px; }
-  #theme-toggle { align-self: flex-start; }
+
+  /* Item list: number+text on top row, del-btn below */
+  .item-list li {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px 14px;
+  }
+  .item-list li .item-number { align-self: center; }
+  .item-list li .item-text   { align-self: center; }
+  .item-list li .del-btn {
+    flex: 0 0 100%;
+    width: 100%;
+    text-align: center;
+    margin-top: 2px;
+  }
 }
