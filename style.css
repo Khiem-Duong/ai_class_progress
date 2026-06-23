@@ -170,26 +170,26 @@
 
 /* ── TOKENS: FIRE ── */
 [data-theme="fire"] {
-  --bg:          #111111;
-  --bg-alt:      #181818;
+  --bg:          #0d1020;
+  --bg-alt:      #131628;
   --fg:          #f0f0f0;
-  --fg-muted:    #888888;
+  --fg-muted:    #6a6d88;
   --danger:      #f47c20;
-  --border-col:  #282828;
-  --panel-bg:    #161616;
-  --panel-alt:   #111111;
-  --input-bg:    #111111;
-  --input-focus: #1e1e1e;
-  --row-odd:     #161616;
-  --row-even:    #181818;
-  --row-hover:   #1e1e1e;
-  --stats-bg:    #181818;
+  --border-col:  #1e2240;
+  --panel-bg:    #111422;
+  --panel-alt:   #0d1020;
+  --input-bg:    #0d1020;
+  --input-focus: #181c30;
+  --row-odd:     #111422;
+  --row-even:    #131628;
+  --row-hover:   #181c30;
+  --stats-bg:    #131628;
   --stats-fg:    #f47c20;
   --thead-bg:    transparent;
   --thead-fg:    #f47c20;
   --accent:      #f47c20;
   --active-bg:   #f47c20;
-  --active-fg:   #111111;
+  --active-fg:   #0d1020;
 }
 
 /* Fire-specific overrides */
@@ -297,7 +297,11 @@
 }
 
 [data-theme="fire"] .panel:hover {
-  box-shadow: 0 0 40px rgba(244, 124, 32, 0.08);
+  box-shadow: 0 0 40px rgba(244, 124, 32, 0.1);
+}
+
+[data-theme="fire"] .del-btn:hover {
+  background: transparent;
 }
 
 /* ── BASE ── */
@@ -360,7 +364,7 @@ h1 {
 .theme-switcher {
   display: flex;
   border: var(--border);
-  border-radius: 999px;
+  border-radius: 0;
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -406,15 +410,31 @@ h1 {
   color: var(--active-fg);
 }
 
-/* Per-theme switcher shape */
-[data-theme="luxe"] .theme-switcher,
-[data-theme="fire"] .theme-switcher {
-  border-radius: 0;
+/* Reset button bleed into theme-btn for luxe and fire */
+[data-theme="luxe"] .theme-btn,
+[data-theme="fire"] .theme-btn {
+  background: transparent !important;
+  color: var(--fg-muted) !important;
+  border: none !important;
+  border-color: transparent !important;
+  opacity: 1 !important;
 }
 
 [data-theme="luxe"] .theme-btn + .theme-btn,
 [data-theme="fire"] .theme-btn + .theme-btn {
-  border-left: var(--border);
+  border-left: var(--border) !important;
+}
+
+[data-theme="luxe"] .theme-btn:hover,
+[data-theme="fire"] .theme-btn:hover {
+  color: var(--fg) !important;
+  background: transparent !important;
+}
+
+[data-theme="luxe"] .theme-btn.active,
+[data-theme="fire"] .theme-btn.active {
+  background: var(--active-bg) !important;
+  color: var(--active-fg) !important;
 }
 
 /* ── MAIN ── */
