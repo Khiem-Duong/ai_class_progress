@@ -13,7 +13,8 @@ async function addSession() {
   const hours = document.getElementById('s-hours').value.trim()
   const err   = document.getElementById('s-error')
 
-  if (!date || !hours) { err.classList.remove('hidden'); return }
+  const hoursValid = /^\d(:\d{2})?$/.test(hours)
+  if (!date || !hours || !hoursValid) { err.classList.remove('hidden'); return }
   err.classList.add('hidden')
 
   setLoading('s-table', true)
@@ -197,6 +198,20 @@ document.getElementById('s-date').valueAsDate = new Date()
 
 document.getElementById('s-hours').addEventListener('keydown', e => {
   if (e.key === 'Enter') addSession()
+})
+
+document.getElementById('s-hours').addEventListener('input', function () {
+  let v = this.value.replace(/[^\d:]/g, '')   // strip everything except digits and colon
+  const colonIdx = v.indexOf(':')
+  if (colonIdx !== -1) {
+    // keep at most 1 digit before colon, colon, 2 digits after
+    const before = v.slice(0, colonIdx).slice(0, 1)
+    const after  = v.slice(colonIdx + 1).replace(/:/g, '').slice(0, 2)
+    v = before + ':' + after
+  } else {
+    v = v.slice(0, 1)   // no colon yet — cap at 1 digit
+  }
+  if (this.value !== v) this.value = v
 })
 document.getElementById('i-text').addEventListener('keydown', e => {
   if (e.key === 'Enter') addItem()
