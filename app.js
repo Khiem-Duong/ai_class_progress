@@ -153,21 +153,24 @@ function setLoading(elId, on) {
   el.style.pointerEvents = on ? 'none' : ''
 }
 
-// ── THEME TOGGLE (dark ↔ luxe) ──
+// ── THEME CYCLE: dark → luxe → fire → dark ──
+const THEMES = ['dark', 'luxe', 'fire']
+const NEXT_LABEL = { dark: '◆ LUXE', luxe: '▲ FIRE', fire: '◐ DARK' }
+
 function toggleTheme() {
   const html    = document.documentElement
-  const isLuxe  = html.getAttribute('data-theme') === 'luxe'
-  const next    = isLuxe ? 'dark' : 'luxe'
+  const current = html.getAttribute('data-theme') || 'dark'
+  const next    = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length]
   html.setAttribute('data-theme', next)
   localStorage.setItem('theme', next)
-  document.getElementById('theme-toggle').textContent = next === 'luxe' ? '◈ DARK' : '◆ LUXE'
+  document.getElementById('theme-toggle').textContent = NEXT_LABEL[next]
 }
 
 ;(function initTheme() {
   const saved = localStorage.getItem('theme')
-  if (saved === 'luxe') {
-    document.documentElement.setAttribute('data-theme', 'luxe')
-    document.getElementById('theme-toggle').textContent = '◈ DARK'
+  if (saved && THEMES.includes(saved)) {
+    document.documentElement.setAttribute('data-theme', saved)
+    document.getElementById('theme-toggle').textContent = NEXT_LABEL[saved]
   }
 })()
 
