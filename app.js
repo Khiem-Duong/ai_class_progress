@@ -88,7 +88,7 @@ async function renderSessions() {
             title="Click to edit"
             onchange="updateHours(${s.id}, this.value)" />
         </td>
-        <td><button class="del-btn" onclick="deleteSession(${s.id})">✕ DEL</button></td>
+        <td><button class="del-btn" onclick="confirmDelete(() => deleteSession(${s.id}))">✕ DEL</button></td>
       `
       tbody.appendChild(tr)
     })
@@ -138,12 +138,37 @@ async function renderItems() {
       li.innerHTML = `
         <span class="item-number">${String(number).padStart(2, '0')}</span>
         <span class="item-text">${item.text}</span>
-        <button class="del-btn" onclick="deleteItem(${item.id})">✕ DEL</button>
+        <button class="del-btn" onclick="confirmDelete(() => deleteItem(${item.id}))">✕ DEL</button>
       `
       list.appendChild(li)
     })
   }
 }
+
+// ── DELETE CONFIRMATION ──
+let _pendingDelete = null
+
+function confirmDelete(action) {
+  _pendingDelete = action
+  document.getElementById('confirm-modal').classList.remove('hidden')
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('confirm-yes').addEventListener('click', async () => {
+    document.getElementById('confirm-modal').classList.add('hidden')
+    if (_pendingDelete) { const fn = _pendingDelete; _pendingDelete = null; await fn() }
+  })
+  document.getElementById('confirm-no').addEventListener('click', () => {
+    document.getElementById('confirm-modal').classList.add('hidden')
+    _pendingDelete = null
+  })
+  document.getElementById('confirm-modal').addEventListener('click', e => {
+    if (e.target === e.currentTarget) {
+      document.getElementById('confirm-modal').classList.add('hidden')
+      _pendingDelete = null
+    }
+  })
+})
 
 // ── LOADING STATE ──
 function setLoading(elId, on) {
