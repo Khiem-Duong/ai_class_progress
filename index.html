@@ -14,7 +14,11 @@
         <h1>AI CLASS PROGRESS</h1>
         <p class="subtitle">TRACK. LOG. DOMINATE.</p>
       </div>
-      <button id="theme-toggle" onclick="toggleTheme()">◆ LUXE</button>
+      <div class="theme-switcher" role="group" aria-label="Theme">
+        <button class="theme-btn" data-t="dark"  onclick="setTheme('dark')">DARK</button>
+        <button class="theme-btn" data-t="luxe"  onclick="setTheme('luxe')">LUXE</button>
+        <button class="theme-btn" data-t="fire"  onclick="setTheme('fire')">FIRE</button>
+      </div>
     </div>
   </header>
 

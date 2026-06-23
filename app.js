@@ -153,25 +153,18 @@ function setLoading(elId, on) {
   el.style.pointerEvents = on ? 'none' : ''
 }
 
-// ── THEME CYCLE: dark → luxe → fire → dark ──
-const THEMES = ['dark', 'luxe', 'fire']
-const NEXT_LABEL = { dark: '◆ LUXE', luxe: '▲ FIRE', fire: '◐ DARK' }
-
-function toggleTheme() {
-  const html    = document.documentElement
-  const current = html.getAttribute('data-theme') || 'dark'
-  const next    = THEMES[(THEMES.indexOf(current) + 1) % THEMES.length]
-  html.setAttribute('data-theme', next)
-  localStorage.setItem('theme', next)
-  document.getElementById('theme-toggle').textContent = NEXT_LABEL[next]
+// ── THEME SWITCHER ──
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme)
+  localStorage.setItem('theme', theme)
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.t === theme)
+  })
 }
 
 ;(function initTheme() {
-  const saved = localStorage.getItem('theme')
-  if (saved && THEMES.includes(saved)) {
-    document.documentElement.setAttribute('data-theme', saved)
-    document.getElementById('theme-toggle').textContent = NEXT_LABEL[saved]
-  }
+  const saved = localStorage.getItem('theme') || 'dark'
+  setTheme(saved)
 })()
 
 // ── INIT ──
