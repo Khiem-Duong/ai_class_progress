@@ -201,17 +201,10 @@ document.getElementById('s-hours').addEventListener('keydown', e => {
 })
 
 document.getElementById('s-hours').addEventListener('input', function () {
-  let v = this.value.replace(/[^\d:]/g, '')   // strip everything except digits and colon
-  const colonIdx = v.indexOf(':')
-  if (colonIdx !== -1) {
-    // keep at most 1 digit before colon, colon, 2 digits after
-    const before = v.slice(0, colonIdx).slice(0, 1)
-    const after  = v.slice(colonIdx + 1).replace(/:/g, '').slice(0, 2)
-    v = before + ':' + after
-  } else {
-    v = v.slice(0, 1)   // no colon yet — cap at 1 digit
-  }
-  if (this.value !== v) this.value = v
+  const digits = this.value.replace(/\D/g, '').slice(0, 3)
+  if      (digits.length <= 1) this.value = digits
+  else if (digits.length === 2) this.value = digits[0] + ':' + digits[1]
+  else                          this.value = digits[0] + ':' + digits[1] + digits[2]
 })
 document.getElementById('i-text').addEventListener('keydown', e => {
   if (e.key === 'Enter') addItem()
